@@ -21,7 +21,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
   int _selectedIndex = 0;
   final List<Map<String, dynamic>> _pages = [
     {'page': const HomeScreen(), 'title': 'Feed'},
-    {'page': const CategoryScreen(), "title": 'Explore'},
+    {'page': CategoryScreen(), "title": 'Explore'},
     {'page': const CartScreen(), 'title': 'Cart'},
     {'page': const UserScreen(), 'title': 'Account'},
   ];
@@ -37,6 +37,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
 
     return Scaffold(
       appBar: AppBar(
+          // elevation: 0,
           backgroundColor:
               themeState.getDarkTheme ? bgLightBlack : Colors.white,
           title: Text(

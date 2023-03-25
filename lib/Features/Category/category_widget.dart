@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:groceteria_app/Services/utils.dart';
 
-import '../../Providers/ThemeProviders/dark_theme_provider.dart';
 import '../../Themes/theme.dart';
 
 class CategoryWidget extends StatelessWidget {
-  const CategoryWidget({super.key});
+  CategoryWidget({
+    super.key,
+    required this.categoryColor,
+    required this.categoryImage,
+    required this.categoryName,
+  });
+  String categoryImage, categoryName;
+  final Color categoryColor;
 
   @override
   Widget build(BuildContext context) {
-    final themeState = Provider.of<DarkThemeProvider>(context);
     double screenWidth = MediaQuery.of(context).size.width;
+    final utils = UtilsPack(context);
 
     return Container(
       height: screenWidth * 0.5,
@@ -19,7 +25,7 @@ class CategoryWidget extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
-          colors: themeState.getDarkTheme
+          colors: utils.getTheme
               ? [
                   bgColorDark,
                   bgLightBlack,
@@ -32,9 +38,9 @@ class CategoryWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: themeState.getDarkTheme
-                ? Colors.amber.withOpacity(0.1)
-                : Colors.grey.withOpacity(0.5),
+            color: utils.getTheme
+                ? categoryColor.withOpacity(0.4)
+                : categoryColor.withOpacity(0.5),
             spreadRadius: 1,
             blurRadius: 7,
             offset: const Offset(0, 3), // changes position of shadow
@@ -47,27 +53,24 @@ class CategoryWidget extends StatelessWidget {
             margin: const EdgeInsets.only(top: 15),
             height: screenWidth * 0.3,
             width: screenWidth * 0.3,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
                 // color: Colors.black,
                 image: DecorationImage(
-                    image: AssetImage('assets/category/fruits.png'),
-                    fit: BoxFit.cover)),
+                    image: AssetImage(categoryImage), fit: BoxFit.cover)),
           ),
           Container(
             margin: const EdgeInsets.only(top: 24),
             height: screenWidth * 0.1,
-            width: screenWidth * 0.4,
+            width: screenWidth * 0.5,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-                color: themeState.getDarkTheme
-                    ? bgLightBlack
-                    : Colors.amber.shade400,
+                color: utils.getTheme ? bgLightBlack : categoryColor,
                 borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(10),
                     bottomRight: Radius.circular(10))),
-            child: const Text(
-              'Fruits',
-              style: TextStyle(fontSize: 18),
+            child: Text(
+              categoryName,
+              style: const TextStyle(fontSize: 18),
             ),
           )
         ],
